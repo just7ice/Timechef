@@ -653,7 +653,7 @@ section {
     letter-spacing: -0.5px;
 }
 .trust__quote::before {
-    content: """;
+    content: '"';
     color: var(--purple);
     font-size: 80px;
     line-height: 0;
@@ -760,9 +760,8 @@ section {
     margin: 24px auto;
 }
 
-.footer__company a {
-    color: var(--purple-light);
-    text-decoration: none;
+.footer__company {
+    Powered by <a href="https://33mara.com">삼삼마라</a> · 문의: 33mara.com
 }
 
 /* ═══════════════════════════════════════════════
@@ -813,7 +812,6 @@ section {
 </head>
 <body>
 
-<!-- ═══════════════ Hero ═══════════════ -->
 <header class="hero">
     <div class="container">
         <nav class="hero__nav">
@@ -821,7 +819,7 @@ section {
                 <img src="logo.png" alt="Time Chef">
                 <div class="hero__logo-text">Time<span>Chef</span></div>
             </div>
-            <a href="#download" class="hero__nav-cta">무료 다운로드</a>
+            <a href="https://github.com/just7ice/Timechef/releases/download/Public/TimeChef_Setup_v1.0.0.exe" class="hero__nav-cta">무료 다운로드</a>
         </nav>
 
         <div class="hero__main">
@@ -836,7 +834,7 @@ section {
                     AI 음성과 동영상으로 매번 설명할 필요 없는 매장 운영을 시작하세요.
                 </p>
                 <div class="hero__cta-group">
-                    <a href="#download" class="btn-primary">
+                    <a href="https://github.com/just7ice/Timechef/releases/download/Public/TimeChef_Setup_v1.0.0.exe" class="btn-primary">
                         Windows용 무료 다운로드
                         <span style="font-size: 18px;">→</span>
                     </a>
@@ -875,7 +873,6 @@ section {
     </div>
 </header>
 
-<!-- ═══════════════ Pain points ═══════════════ -->
 <section class="pain">
     <div class="container">
         <div class="section__label reveal">매장 운영의 고민</div>
@@ -904,7 +901,6 @@ section {
     </div>
 </section>
 
-<!-- ═══════════════ Showcase 메인 스크린 ═══════════════ -->
 <section class="showcase">
     <div class="container">
         <div class="section__label reveal">실제 화면</div>
@@ -921,13 +917,11 @@ section {
     </div>
 </section>
 
-<!-- ═══════════════ Features ═══════════════ -->
 <section class="features" id="features">
     <div class="container">
         <div class="section__label reveal">핵심 기능</div>
         <h2 class="section__h2 reveal">3가지 기능으로<br>매장 운영이 달라집니다</h2>
 
-        <!-- Feature 1: 영상/이미지 + 메모 -->
         <div class="feature">
             <div class="feature__content reveal">
                 <div class="feature__num">FEATURE 01</div>
@@ -950,7 +944,6 @@ section {
             </div>
         </div>
 
-        <!-- Feature 2: AI 음성 -->
         <div class="feature feature--reverse">
             <div class="feature__visual reveal">
                 <div class="screenshot screenshot--bordered" style="background: linear-gradient(135deg, #1a1530 0%, #0a0a14 100%);">
@@ -985,7 +978,6 @@ section {
             </div>
         </div>
 
-        <!-- Feature 3: 반복 설정 -->
         <div class="feature">
             <div class="feature__content reveal">
                 <div class="feature__num">FEATURE 03</div>
@@ -1010,7 +1002,6 @@ section {
     </div>
 </section>
 
-<!-- ═══════════════ Stats ═══════════════ -->
 <section class="stats">
     <div class="container">
         <div class="stats__grid">
@@ -1030,7 +1021,6 @@ section {
     </div>
 </section>
 
-<!-- ═══════════════ Use Cases ═══════════════ -->
 <section class="use-cases">
     <div class="container">
         <div class="section__label reveal">활용 사례</div>
@@ -1084,7 +1074,6 @@ section {
     </div>
 </section>
 
-<!-- ═══════════════ Trust ═══════════════ -->
 <section class="trust">
     <div class="container">
         <p class="trust__quote reveal">
@@ -1098,7 +1087,6 @@ section {
     </div>
 </section>
 
-<!-- ═══════════════ Final CTA ═══════════════ -->
 <section class="final-cta" id="download">
     <div class="container">
         <h2 class="final-cta__h2">지금 바로 시작하세요</h2>
@@ -1107,16 +1095,15 @@ section {
             완전 무료, 광고 없음, 회원가입 없음.
         </p>
         <div class="final-cta__buttons">
-            <a href="DOWNLOAD_LINK_HERE" class="btn-primary">
+            <a href="https://github.com/just7ice/Timechef/releases/download/Public/TimeChef_Setup_v1.0.0.exe" class="btn-primary">
                 Windows용 다운로드 · v1.0
                 <span style="font-size: 18px;">→</span>
             </a>
-            <a href="MANUAL_LINK_HERE" class="btn-secondary">사용 설명서 보기</a>
+            <a href="https://github.com/just7ice/Timechef" class="btn-secondary">GitHub 저장소 보기</a>
         </div>
     </div>
 </section>
 
-<!-- ═══════════════ Footer ═══════════════ -->
 <footer class="footer">
     <div class="container">
         <div class="footer__brand">
