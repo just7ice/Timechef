@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Time Chef — 외식업 사장님을 위한 알람 매니저</title>
+<meta name="description" content="시재 점검부터 마감 청소까지. AI 음성과 동영상으로 직원이 바뀌어도 빠뜨림 없는 매장 운영. 무료 다운로드.">
+<meta property="og:title" content="Time Chef — 외식업 매장 관리 알람 매니저">
+<meta property="og:description" content="직원이 바뀌어도 매장은 그대로. AI 음성과 영상으로 운영하는 자동 알람 시스템.">
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+    --accent: #e8805a;
+    --accent-light: #ef9670;
+    --purple: #8b6bbf;
+    --purple-light: #b39ce0;
+    --text-primary: #0e0e16;
+    --text-secondary: #5a5a72;
+    --text-tertiary: #8a8aa3;
+    --bg-dark: #0a0a14;
+    --bg-darker: #050510;
+    --bg-light: #fafaf9;
+    --border-light: #ececec;
+}
+
+body {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+    color: var(--text-primary);
+    background: var(--bg-light);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* ═══════════════════════════════════════════════
+   Hero — 풀스크린 임팩트
+═══════════════════════════════════════════════ */
+.hero {
+    min-height: 720px;
+    background:
+        radial-gradient(circle at 20% 0%, rgba(139, 107, 191, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 80% 100%, rgba(232, 128, 90, 0.12) 0%, transparent 40%),
+        linear-gradient(180deg, #0a0a14 0%, #14142a 100%);
+    color: white;
+    padding: 60px 0 100px;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero__nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 80px;
+}
+
+.hero__logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.hero__logo img {
+    width: 40px;
+    height: 40px;
+}
+
+.hero__logo-text {
+    font-family: Georgia, serif;
+    font-size: 22px;
+    color: white;
+    letter-spacing: -0.5px;
+}
+.hero__logo-text span { color: var(--purple-light); font-style: italic; }
+
+.hero__nav-cta {
+    background: rgba(255,255,255,0.08);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    border: 1px solid rgba(255,255,255,0.15);
+    transition: all 0.2s;
+}
+.hero__nav-cta:hover {
+    background: rgba(255,255,255,0.14);
+    border-color: rgba(255,255,255,0.3);
+}
+
+.hero__main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.hero__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(139, 107, 191, 0.15);
+    color: var(--purple-light);
+    padding: 8px 16px;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 24px;
+    border: 1px solid rgba(139, 107, 191, 0.3);
+}
+.hero__badge::before {
+    content: "●";
+    color: #3ecfbf;
+    font-size: 10px;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+}
+
+.hero__h1 {
+    font-size: 56px;
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    margin-bottom: 24px;
+    line-height: 1.15;
+}
+.hero__h1 .accent {
+    background: linear-gradient(135deg, var(--accent) 0%, #f5a378 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero__sub {
+    font-size: 18px;
+    color: #c5c5d8;
+    margin-bottom: 36px;
+    line-height: 1.7;
+    max-width: 480px;
+}
+
+.hero__cta-group {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+}
+
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--accent);
+    color: white;
+    padding: 18px 32px;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s;
+    box-shadow: 0 8px 24px rgba(232, 128, 90, 0.35);
+}
+.btn-primary:hover {
+    background: var(--accent-light);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(232, 128, 90, 0.45);
+}
+
+.btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.95);
+    padding: 17px 28px;
+    border-radius: 50px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.2);
+    transition: all 0.2s;
+}
+.btn-secondary:hover {
+    background: rgba(255,255,255,0.14);
+    border-color: rgba(255,255,255,0.35);
+}
+
+.hero__meta {
+    display: flex;
+    gap: 24px;
+    font-size: 13px;
+    color: var(--text-tertiary);
+}
+.hero__meta-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.hero__meta-item::before {
+    content: "✓";
+    color: #3ecfbf;
+    font-weight: 700;
+}
+
+/* Hero 우측 — 슬라이드쇼 */
+.hero__visual {
+    position: relative;
+    perspective: 1500px;
+}
+
+.slideshow {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow:
+        0 30px 80px rgba(0,0,0,0.5),
+        0 0 0 1px rgba(255,255,255,0.05);
+    transform: rotateY(-3deg) rotateX(2deg);
+    transition: transform 0.5s ease;
+}
+.slideshow:hover {
+    transform: rotateY(0deg) rotateX(0deg);
+}
+
+.slideshow__track {
+    position: absolute;
+    inset: 0;
+}
+
+.slideshow__slide {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    background-color: #0e0e1a;
+    opacity: 0;
+    transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.slideshow__slide.active {
+    opacity: 1;
+}
+
+.slideshow__indicators {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+}
+
+.slideshow__dot {
+    width: 30px;
+    height: 4px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: none;
+    padding: 0;
+}
+.slideshow__dot.active {
+    background: var(--accent);
+    width: 40px;
+}
+
+/* 플로팅 카드 효과 */
+.floating-stat {
+    position: absolute;
+    background: rgba(15, 15, 28, 0.95);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 16px 20px;
+    border-radius: 14px;
+    color: white;
+    font-size: 13px;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+    animation: float 6s ease-in-out infinite;
+}
+
+.floating-stat--top {
+    top: -20px;
+    right: -20px;
+    animation-delay: 0s;
+}
+.floating-stat--bottom {
+    bottom: 30px;
+    left: -30px;
+    animation-delay: 3s;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.floating-stat__num {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--accent);
+    margin-bottom: 2px;
+}
+
+.floating-stat__label {
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+    letter-spacing: 0.5px;
+}
+
+/* ═══════════════════════════════════════════════
+   Section 공통
+═══════════════════════════════════════════════ */
+section {
+    padding: 100px 0;
+}
+
+.section__label {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--purple);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.section__h2 {
+    font-size: 40px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 20px;
+    text-align: center;
+    line-height: 1.25;
+}
+
+.section__sub {
+    font-size: 17px;
+    color: var(--text-secondary);
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto 64px;
+    line-height: 1.7;
+}
+
+/* ═══════════════════════════════════════════════
+   Pain Points
+═══════════════════════════════════════════════ */
+.pain {
+    background: white;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.pain__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 48px;
+}
+
+.pain__card {
+    padding: 36px 28px;
+    background: #f8f8f6;
+    border-radius: 20px;
+    border: 1px solid var(--border-light);
+    transition: all 0.3s;
+}
+.pain__card:hover {
+    border-color: var(--accent);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.04);
+}
+
+.pain__icon {
+    width: 56px;
+    height: 56px;
+    background: white;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    font-size: 28px;
+    border: 1px solid var(--border-light);
+}
+
+.pain__title {
+    font-size: 19px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    line-height: 1.4;
+}
+
+.pain__desc {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+}
+
+/* ═══════════════════════════════════════════════
+   Showcase — 실제 스크린샷
+═══════════════════════════════════════════════ */
+.showcase {
+    background: linear-gradient(180deg, #fafaf9 0%, #f0f0ed 100%);
+}
+
+.showcase__hero {
+    position: relative;
+    margin-top: 32px;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow:
+        0 30px 80px rgba(0,0,0,0.12),
+        0 0 0 1px rgba(0,0,0,0.04);
+    background: #0e0e1a;
+}
+
+.showcase__hero img {
+    width: 100%;
+    display: block;
+}
+
+.showcase__caption {
+    position: absolute;
+    top: 24px;
+    left: 24px;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(12px);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+/* ═══════════════════════════════════════════════
+   Features — 좌우 교차
+═══════════════════════════════════════════════ */
+.features {
+    background: white;
+}
+
+.feature {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+    margin-bottom: 120px;
+}
+.feature:last-child { margin-bottom: 0; }
+.feature--reverse .feature__visual { order: 2; }
+
+.feature__num {
+    display: inline-block;
+    font-family: Georgia, serif;
+    font-size: 14px;
+    color: var(--purple);
+    font-weight: 700;
+    margin-bottom: 16px;
+    letter-spacing: 2px;
+}
+
+.feature__h3 {
+    font-size: 36px;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -1px;
+    margin-bottom: 20px;
+}
+
+.feature__desc {
+    font-size: 17px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: 28px;
+}
+
+.feature__list {
+    list-style: none;
+    padding: 0;
+}
+.feature__list li {
+    font-size: 15px;
+    color: var(--text-primary);
+    padding: 10px 0 10px 32px;
+    position: relative;
+    line-height: 1.6;
+}
+.feature__list li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    top: 10px;
+    width: 22px;
+    height: 22px;
+    background: linear-gradient(135deg, #3ecfbf 0%, #2ab09f 100%);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+/* 스크린샷 컨테이너 */
+.screenshot {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow:
+        0 24px 64px rgba(0,0,0,0.15),
+        0 0 0 1px rgba(0,0,0,0.04);
+}
+
+.screenshot img {
+    width: 100%;
+    display: block;
+}
+
+.screenshot--bordered {
+    background: #0a0a14;
+    padding: 24px;
+}
+
+.screenshot--bordered img {
+    border-radius: 12px;
+}
+
+/* ═══════════════════════════════════════════════
+   Use Cases — 시간대별 활용
+═══════════════════════════════════════════════ */
+.use-cases {
+    background: linear-gradient(180deg, #f0f0ed 0%, #fafaf9 100%);
+}
+
+.use-cases__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-top: 48px;
+}
+
+.use-case {
+    background: white;
+    border-radius: 16px;
+    padding: 24px 28px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    border: 1px solid var(--border-light);
+    transition: all 0.3s;
+}
+.use-case:hover {
+    border-color: var(--accent);
+    transform: translateX(4px);
+}
+
+.use-case__time {
+    font-family: 'Consolas', 'Menlo', monospace;
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--accent);
+    flex-shrink: 0;
+    min-width: 80px;
+    letter-spacing: 1px;
+}
+
+.use-case__text {
+    font-size: 15px;
+    color: var(--text-primary);
+    line-height: 1.5;
+}
+
+.use-case__text strong {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 16px;
+}
+
+.use-case__sub {
+    color: var(--text-secondary);
+    font-weight: 400;
+    font-size: 13px;
+}
+
+/* ═══════════════════════════════════════════════
+   Stats
+═══════════════════════════════════════════════ */
+.stats {
+    background: var(--bg-dark);
+    color: white;
+    padding: 80px 0;
+}
+
+.stats__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    text-align: center;
+}
+
+.stat__num {
+    font-family: Georgia, serif;
+    font-size: 56px;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--accent) 0%, #f5a378 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+    line-height: 1;
+}
+
+.stat__label {
+    font-size: 14px;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 0.5px;
+}
+
+/* ═══════════════════════════════════════════════
+   Trust Quote
+═══════════════════════════════════════════════ */
+.trust {
+    text-align: center;
+    background: white;
+    padding: 100px 0;
+}
+
+.trust__quote {
+    font-family: Georgia, serif;
+    font-size: 28px;
+    line-height: 1.5;
+    font-style: italic;
+    color: var(--text-primary);
+    max-width: 800px;
+    margin: 0 auto 32px;
+    letter-spacing: -0.5px;
+}
+.trust__quote::before {
+    content: """;
+    color: var(--purple);
+    font-size: 80px;
+    line-height: 0;
+    display: block;
+    margin-bottom: 24px;
+    font-family: Georgia, serif;
+}
+
+.trust__author {
+    font-size: 15px;
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+.trust__author-role {
+    color: var(--text-tertiary);
+    font-weight: 400;
+}
+
+/* ═══════════════════════════════════════════════
+   Final CTA
+═══════════════════════════════════════════════ */
+.final-cta {
+    background:
+        radial-gradient(circle at 20% 30%, rgba(139, 107, 191, 0.2) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(232, 128, 90, 0.15) 0%, transparent 50%),
+        linear-gradient(180deg, #14142a 0%, #0a0a14 100%);
+    color: white;
+    text-align: center;
+    padding: 120px 0;
+}
+
+.final-cta__h2 {
+    font-size: 48px;
+    font-weight: 800;
+    margin-bottom: 20px;
+    letter-spacing: -1px;
+    line-height: 1.2;
+}
+
+.final-cta__sub {
+    font-size: 18px;
+    color: #c5c5d8;
+    margin-bottom: 48px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.7;
+}
+
+.final-cta__buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* ═══════════════════════════════════════════════
+   Footer
+═══════════════════════════════════════════════ */
+.footer {
+    background: var(--bg-darker);
+    color: var(--text-tertiary);
+    padding: 48px 0 32px;
+    text-align: center;
+}
+
+.footer__brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.footer__brand img {
+    width: 28px;
+    height: 28px;
+}
+
+.footer__brand-text {
+    font-family: Georgia, serif;
+    font-size: 18px;
+    color: rgba(255,255,255,0.85);
+}
+
+.footer__tagline {
+    font-family: Georgia, serif;
+    font-style: italic;
+    color: var(--text-tertiary);
+    font-size: 13px;
+    margin-bottom: 24px;
+}
+
+.footer__credit {
+    font-size: 12px;
+    margin: 4px 0;
+    color: var(--text-tertiary);
+}
+
+.footer__divider {
+    width: 40px;
+    height: 1px;
+    background: rgba(255,255,255,0.1);
+    margin: 24px auto;
+}
+
+.footer__company a {
+    color: var(--purple-light);
+    text-decoration: none;
+}
+
+/* ═══════════════════════════════════════════════
+   Responsive
+═══════════════════════════════════════════════ */
+@media (max-width: 968px) {
+    .hero__main { grid-template-columns: 1fr; gap: 40px; }
+    .hero__h1 { font-size: 42px; }
+    .hero__visual { max-width: 480px; margin: 0 auto; }
+    .feature {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        margin-bottom: 80px;
+    }
+    .feature--reverse .feature__visual { order: 0; }
+    .feature__h3 { font-size: 28px; }
+    .pain__grid { grid-template-columns: 1fr; }
+    .stats__grid { grid-template-columns: 1fr; gap: 32px; }
+    .use-cases__grid { grid-template-columns: 1fr; }
+    .section__h2 { font-size: 30px; }
+    .final-cta__h2 { font-size: 32px; }
+    .trust__quote { font-size: 20px; }
+    .floating-stat { display: none; }
+}
+
+@media (max-width: 480px) {
+    .hero__h1 { font-size: 34px; }
+    .section__h2 { font-size: 26px; }
+    .feature__h3 { font-size: 24px; }
+    .container { padding: 0 20px; }
+    .hero__cta-group { flex-direction: column; align-items: stretch; }
+    .btn-primary, .btn-secondary { justify-content: center; }
+}
+
+/* ═══════════════════════════════════════════════
+   Scroll reveal animations
+═══════════════════════════════════════════════ */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ Hero ═══════════════ -->
+<header class="hero">
+    <div class="container">
+        <nav class="hero__nav">
+            <div class="hero__logo">
+                <img src="logo.png" alt="Time Chef">
+                <div class="hero__logo-text">Time<span>Chef</span></div>
+            </div>
+            <a href="#download" class="hero__nav-cta">무료 다운로드</a>
+        </nav>
+
+        <div class="hero__main">
+            <div class="hero__text">
+                <div class="hero__badge">외식업 사장님을 위한 알람 매니저 · v1.0</div>
+                <h1 class="hero__h1">
+                    직원이 바뀌어도<br>
+                    <span class="accent">매장은 그대로.</span>
+                </h1>
+                <p class="hero__sub">
+                    시재 점검부터 마감 청소까지, 매장 업무를 정확한 시간에 정확하게.
+                    AI 음성과 동영상으로 매번 설명할 필요 없는 매장 운영을 시작하세요.
+                </p>
+                <div class="hero__cta-group">
+                    <a href="#download" class="btn-primary">
+                        Windows용 무료 다운로드
+                        <span style="font-size: 18px;">→</span>
+                    </a>
+                    <a href="#features" class="btn-secondary">기능 살펴보기</a>
+                </div>
+                <div class="hero__meta">
+                    <div class="hero__meta-item">완전 무료</div>
+                    <div class="hero__meta-item">광고 없음</div>
+                    <div class="hero__meta-item">회원가입 없음</div>
+                </div>
+            </div>
+
+            <div class="hero__visual">
+                <div class="slideshow">
+                    <div class="slideshow__track">
+                        <div class="slideshow__slide active" style="background-image: url('screen-cash-check.png');"></div>
+                        <div class="slideshow__slide" style="background-image: url('screen-floor-cleaning.png');"></div>
+                        <div class="slideshow__slide" style="background-image: url('screen-add-alarm.png'); background-size: contain; background-color: #0a0a14; background-repeat: no-repeat;"></div>
+                    </div>
+                    <div class="slideshow__indicators">
+                        <button class="slideshow__dot active" data-slide="0" aria-label="슬라이드 1"></button>
+                        <button class="slideshow__dot" data-slide="1" aria-label="슬라이드 2"></button>
+                        <button class="slideshow__dot" data-slide="2" aria-label="슬라이드 3"></button>
+                    </div>
+                </div>
+                <div class="floating-stat floating-stat--top">
+                    <div class="floating-stat__num">3</div>
+                    <div class="floating-stat__label">한국어 AI 음성</div>
+                </div>
+                <div class="floating-stat floating-stat--bottom">
+                    <div class="floating-stat__num">24/7</div>
+                    <div class="floating-stat__label">자동 알람</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- ═══════════════ Pain points ═══════════════ -->
+<section class="pain">
+    <div class="container">
+        <div class="section__label reveal">매장 운영의 고민</div>
+        <h2 class="section__h2 reveal">
+            매장의 작은 누락이<br>
+            <span style="color: var(--accent);">큰 손실</span>로 이어집니다
+        </h2>
+
+        <div class="pain__grid">
+            <div class="pain__card reveal">
+                <div class="pain__icon">📋</div>
+                <div class="pain__title">매번 같은 설명의 반복</div>
+                <div class="pain__desc">새 직원이 올 때마다 처음부터 다시 가르쳐야 하는 매장 표준 업무들. 사장님의 시간이 가장 비싼 자원입니다.</div>
+            </div>
+            <div class="pain__card reveal">
+                <div class="pain__icon">⏰</div>
+                <div class="pain__title">놓치는 정기 점검</div>
+                <div class="pain__desc">시재 점검, 가습기 ON/OFF, 후드 청소처럼 작지만 빠뜨리면 손실로 이어지는 매장 루틴들.</div>
+            </div>
+            <div class="pain__card reveal">
+                <div class="pain__icon">📱</div>
+                <div class="pain__title">스마트폰 알람의 한계</div>
+                <div class="pain__desc">매장 PC에서 작업 중일 때 스마트폰 알람을 놓치거나, 시끄러운 매장에서 듣지 못하는 경우.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════ Showcase 메인 스크린 ═══════════════ -->
+<section class="showcase">
+    <div class="container">
+        <div class="section__label reveal">실제 화면</div>
+        <h2 class="section__h2 reveal">알람이 울리는 순간,<br>모든 것이 명확합니다</h2>
+        <p class="section__sub reveal">
+            매장 영상이 자동 재생되고, 카드 형태로 핵심 정보가 나타납니다.<br>
+            누가 보아도 1초 안에 무엇을 해야 할지 알 수 있습니다.
+        </p>
+
+        <div class="showcase__hero reveal">
+            <div class="showcase__caption">실제 알람 화면 — 시재 점검</div>
+            <img src="screen-cash-check.png" alt="시재 점검 알람 화면">
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════ Features ═══════════════ -->
+<section class="features" id="features">
+    <div class="container">
+        <div class="section__label reveal">핵심 기능</div>
+        <h2 class="section__h2 reveal">3가지 기능으로<br>매장 운영이 달라집니다</h2>
+
+        <!-- Feature 1: 영상/이미지 + 메모 -->
+        <div class="feature">
+            <div class="feature__content reveal">
+                <div class="feature__num">FEATURE 01</div>
+                <h3 class="feature__h3">설명서를 영상으로<br>보여주는 알람</h3>
+                <p class="feature__desc">
+                    알람이 울릴 때 매장 운영 영상이 함께 재생됩니다.
+                    글로 된 매뉴얼을 읽지 않아도, 영상만 보면 누구든 따라 할 수 있습니다.
+                </p>
+                <ul class="feature__list">
+                    <li>동영상으로 작업 절차를 시각적으로 안내</li>
+                    <li>이미지 첨부로 체크 포인트를 명확히 표시</li>
+                    <li>메모 박스로 추가 지시사항 전달</li>
+                    <li>업무별 카드 색상으로 한눈에 구분</li>
+                </ul>
+            </div>
+            <div class="feature__visual reveal">
+                <div class="screenshot">
+                    <img src="screen-floor-cleaning.png" alt="바닥/유리 청소 알람">
+                </div>
+            </div>
+        </div>
+
+        <!-- Feature 2: AI 음성 -->
+        <div class="feature feature--reverse">
+            <div class="feature__visual reveal">
+                <div class="screenshot screenshot--bordered" style="background: linear-gradient(135deg, #1a1530 0%, #0a0a14 100%);">
+                    <div style="padding: 30px; text-align: center; color: white;">
+                        <div style="font-size: 80px; margin-bottom: 20px;">🤖</div>
+                        <div style="font-size: 24px; font-weight: 700; color: var(--purple-light); margin-bottom: 12px;">AI 음성으로 알람음 생성</div>
+                        <div style="font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.7; max-width: 360px; margin: 0 auto 24px;">
+                            메모를 텍스트로 입력하면<br>
+                            자연스러운 한국어 음성으로 변환됩니다.
+                        </div>
+                        <div style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
+                            <div style="background: rgba(139,107,191,0.2); border: 1px solid rgba(139,107,191,0.4); color: var(--purple-light); padding: 8px 14px; border-radius: 20px; font-size: 12px; font-weight: 500;">선히 (여성)</div>
+                            <div style="background: rgba(139,107,191,0.2); border: 1px solid rgba(139,107,191,0.4); color: var(--purple-light); padding: 8px 14px; border-radius: 20px; font-size: 12px; font-weight: 500;">인준 (남성)</div>
+                            <div style="background: rgba(139,107,191,0.2); border: 1px solid rgba(139,107,191,0.4); color: var(--purple-light); padding: 8px 14px; border-radius: 20px; font-size: 12px; font-weight: 500;">현수 (남성)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="feature__content reveal">
+                <div class="feature__num">FEATURE 02</div>
+                <h3 class="feature__h3">메모를 AI가 음성으로<br>읽어드립니다</h3>
+                <p class="feature__desc">
+                    텍스트 메모만 입력하면 AI가 자연스러운 한국어 음성으로 변환합니다.
+                    별도 녹음 없이, 알람과 함께 음성 안내가 자동으로 재생됩니다.
+                </p>
+                <ul class="feature__list">
+                    <li>3가지 한국어 음성 (선히, 인준, 현수)</li>
+                    <li>잔잔한 BGM과 함께 자연스러운 재생</li>
+                    <li>매장 내 어디서든 명확하게 들리는 음량 조절</li>
+                    <li>설치 즉시 사용, 별도 가입/결제 없음</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Feature 3: 반복 설정 -->
+        <div class="feature">
+            <div class="feature__content reveal">
+                <div class="feature__num">FEATURE 03</div>
+                <h3 class="feature__h3">한 번 설정하면<br>매일 자동으로</h3>
+                <p class="feature__desc">
+                    한 번만, 매일, 매주(요일 선택), 매월, 매년 — 매장 일정에 맞는 반복 주기를 설정하세요.
+                    PC를 켜면 자동 실행되어 24시간 매장을 지킵니다.
+                </p>
+                <ul class="feature__list">
+                    <li>5종 반복 주기 (한 번만 / 매일 / 매주 / 매월 / 매년)</li>
+                    <li>요일별 세부 설정 (월~일 개별 선택)</li>
+                    <li>Windows 시작 시 자동 실행</li>
+                    <li>5분 스누즈로 바쁠 때 잠시 미루기</li>
+                </ul>
+            </div>
+            <div class="feature__visual reveal">
+                <div class="screenshot screenshot--bordered">
+                    <img src="screen-add-alarm.png" alt="알람 추가 화면">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════ Stats ═══════════════ -->
+<section class="stats">
+    <div class="container">
+        <div class="stats__grid">
+            <div class="stat reveal">
+                <div class="stat__num">∞</div>
+                <div class="stat__label">알람 개수 무제한</div>
+            </div>
+            <div class="stat reveal">
+                <div class="stat__num">3</div>
+                <div class="stat__label">한국어 AI 음성</div>
+            </div>
+            <div class="stat reveal">
+                <div class="stat__num">100%</div>
+                <div class="stat__label">완전 무료 · 광고 없음</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════ Use Cases ═══════════════ -->
+<section class="use-cases">
+    <div class="container">
+        <div class="section__label reveal">활용 사례</div>
+        <h2 class="section__h2 reveal">하루 24시간,<br>매장의 모든 순간을 함께</h2>
+        <p class="section__sub reveal">실제 외식업 매장에서 가장 많이 사용하는 알람 시나리오입니다.</p>
+
+        <div class="use-cases__grid">
+            <div class="use-case reveal">
+                <div class="use-case__time">08:30</div>
+                <div class="use-case__text">
+                    <strong>오픈 준비</strong>
+                    <span class="use-case__sub">시재 점검 및 현금 확인</span>
+                </div>
+            </div>
+            <div class="use-case reveal">
+                <div class="use-case__time">10:00</div>
+                <div class="use-case__text">
+                    <strong>광고비 세팅</strong>
+                    <span class="use-case__sub">일별 광고 예산 설정</span>
+                </div>
+            </div>
+            <div class="use-case reveal">
+                <div class="use-case__time">14:00</div>
+                <div class="use-case__text">
+                    <strong>중간 점검</strong>
+                    <span class="use-case__sub">재료 소진 상태 확인</span>
+                </div>
+            </div>
+            <div class="use-case reveal">
+                <div class="use-case__time">17:30</div>
+                <div class="use-case__text">
+                    <strong>디너 준비</strong>
+                    <span class="use-case__sub">식자재 추가 발주</span>
+                </div>
+            </div>
+            <div class="use-case reveal">
+                <div class="use-case__time">21:30</div>
+                <div class="use-case__text">
+                    <strong>마감 준비</strong>
+                    <span class="use-case__sub">후드/덕트 청소</span>
+                </div>
+            </div>
+            <div class="use-case reveal">
+                <div class="use-case__time">22:30</div>
+                <div class="use-case__text">
+                    <strong>최종 마감</strong>
+                    <span class="use-case__sub">가습기 OFF, 일일 정산</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════ Trust ═══════════════ -->
+<section class="trust">
+    <div class="container">
+        <p class="trust__quote reveal">
+            매장 운영의 표준화는 가장 중요하지만 가장 어려운 일입니다.
+            Time Chef는 그 일을 자동화합니다.
+        </p>
+        <p class="trust__author reveal">
+            삼삼마라 본사 운영팀<br>
+            <span class="trust__author-role">전국 가맹점 운영 표준화 담당</span>
+        </p>
+    </div>
+</section>
+
+<!-- ═══════════════ Final CTA ═══════════════ -->
+<section class="final-cta" id="download">
+    <div class="container">
+        <h2 class="final-cta__h2">지금 바로 시작하세요</h2>
+        <p class="final-cta__sub">
+            설치부터 첫 알람까지 5분이면 충분합니다.<br>
+            완전 무료, 광고 없음, 회원가입 없음.
+        </p>
+        <div class="final-cta__buttons">
+            <a href="DOWNLOAD_LINK_HERE" class="btn-primary">
+                Windows용 다운로드 · v1.0
+                <span style="font-size: 18px;">→</span>
+            </a>
+            <a href="MANUAL_LINK_HERE" class="btn-secondary">사용 설명서 보기</a>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════ Footer ═══════════════ -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer__brand">
+            <img src="logo.png" alt="Time Chef">
+            <div class="footer__brand-text">Time Chef v1.0</div>
+        </div>
+        <div class="footer__tagline">For those looking to build a system in the kitchen</div>
+        <div class="footer__credit">Created by Sowon Kim · Helped by Jiyeon Choi</div>
+        <div class="footer__divider"></div>
+        <div class="footer__company">
+            Powered by <a href="https://33mara.com">삼삼마라</a> · 문의: 33mara.com
+        </div>
+    </div>
+</footer>
+
+<script>
+// 슬라이드쇼 자동 재생
+(function() {
+    const slides = document.querySelectorAll('.slideshow__slide');
+    const dots = document.querySelectorAll('.slideshow__dot');
+    let current = 0;
+    let interval = null;
+
+    function goTo(idx) {
+        slides[current].classList.remove('active');
+        dots[current].classList.remove('active');
+        current = idx;
+        slides[current].classList.add('active');
+        dots[current].classList.add('active');
+    }
+
+    function next() { goTo((current + 1) % slides.length); }
+
+    function start() {
+        if (interval) clearInterval(interval);
+        interval = setInterval(next, 4000);
+    }
+
+    dots.forEach((dot, i) => {
+        dot.addEventListener('click', () => {
+            goTo(i);
+            start();
+        });
+    });
+
+    start();
+})();
+
+// 스크롤 애니메이션
+(function() {
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                io.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.15 });
+
+    reveals.forEach(el => io.observe(el));
+})();
+</script>
+
+</body>
+</html>
